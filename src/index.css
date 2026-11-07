@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Thème clair (jour) : valeurs par défaut ---- */
+:root {
+  color-scheme: light;
+  --bg: #f3f5f9; --glow1: #bcd3ff66; --glow2: #ffe2a666;
+  --ink: #0f172a; --body: #334155; --mute: #64748b; --mute2: #94a3b8;
+  --line: rgba(15,23,42,.12); --surface: rgba(15,23,42,.05);
+  --card: rgba(255,255,255,.85); --card-shadow: 0 1px 3px rgba(15,23,42,.08);
+  --nav: rgba(255,255,255,.92); --danger: #dc2626; --warn: #b45309;
+  --svg-roof: #cbd5e1; --svg-stroke: #94a3b8; --svg-wall: #f1f5f9; --svg-hole: #e2e8f0; --track: rgba(15,23,42,.08);
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+/* ---- Thème sombre (nuit) ---- */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0b0f17; --glow1: #1b2a4a55; --glow2: #3a2a0a44;
+  --ink: #ffffff; --body: #cbd5e1; --mute: #94a3b8; --mute2: #64748b;
+  --line: rgba(255,255,255,.1); --surface: rgba(255,255,255,.05);
+  --card: rgba(255,255,255,.04); --card-shadow: none;
+  --nav: rgba(11,15,23,.9); --danger: #fca5a5; --warn: #fcd34d;
+  --svg-roof: #2a3348; --svg-stroke: #4b5878; --svg-wall: #1a2132; --svg-hole: #0b0f17; --track: rgba(255,255,255,.08);
+}
+
+body {
+  margin: 0; min-height: 100vh; color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(1200px 600px at 80% -10%, var(--glow1), transparent),
+              radial-gradient(900px 500px at -10% 110%, var(--glow2), transparent), var(--bg);
+  transition: background-color .4s, color .4s;
+}
+input { color: var(--ink); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--card-shadow); backdrop-filter: blur(10px); }
+.spin { animation: spin .5s linear infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.drop { animation: fall 1.2s ease-in infinite; }
+@keyframes fall { 0% { transform: translateY(-8px); opacity: 0 } 30% { opacity: .9 } 100% { transform: translateY(34px); opacity: 0 } }
+.pulse { animation: pl 1.6s ease-in-out infinite; }
+@keyframes pl { 50% { opacity: .35 } }
+
+/* Navigation inspirée de DaisyUI, harmonisée avec les couleurs de l'application. */
+.app-navbar {
+  background: var(--nav);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+.app-sidebar {
+  color: var(--ink);
+  background: var(--bg);
+  border-right: 1px solid var(--line);
+}
+.sidebar-link {
+  min-height: 3rem;
+  color: var(--body);
+  border-radius: 0.9rem;
+}
+.sidebar-link:hover { background: var(--surface); color: var(--ink); }
+.sidebar-link-active,
+.sidebar-link-active:hover {
+  color: #92400e;
+  background: rgba(251, 191, 36, .18);
+  font-weight: 650;
+}
+:root[data-theme='dark'] .sidebar-link-active,
+:root[data-theme='dark'] .sidebar-link-active:hover { color: #fcd34d; }
+
+@media (min-width: 1024px) {
+  .app-navbar { display: none; }
+  .app-sidebar { position: sticky; top: 0; height: 100vh; }
+}
